@@ -3,4 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_1"
+        android:orderInCategory="1"
+        app:showAsAction="never"
+        android:title="Меню 1 "/>
+    <item
+        android:id="@+id/menu_2"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="Меню 2"/>
+    <item
+        android:id="@+id/menu_3"
+        android:orderInCategory="3"
+        app:showAsAction="never"
+        android:title="Меню 3"/>
+    <item
+        android:id="@+id/menu_4"
+        android:orderInCategory="4"
+        app:showAsAction="never"
+        android:title="Меню 4"/>
+
+    <item
+        android:id="@+id/item_delete"
+        android:icon="@drawable/linux"
+        app:showAsAction="ifRoom|withText"
+        android:title="Linux"
+        android:titleCondensed="linux">
+    </item>
 </menu>
