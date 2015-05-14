@@ -22,12 +22,10 @@ import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-//import com.mikepenz.materialdrawer.model.interfaces
+
 
 
 public class MainActivity extends ActionBarActivity {
-    private static final int PROFILE_SETTING = 1;
-
     private Drawer.Result drawerResult = null;
 
 
@@ -66,6 +64,11 @@ public class MainActivity extends ActionBarActivity {
                                         // Скрываем клавиатуру при открытии Navigation Drawer
                                         InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                                         inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
+                                    }
+
+                                    @Override
+                                    public void onDrawerSlide(View drawerView, float pos) {
+
                                     }
 
                                     @Override
