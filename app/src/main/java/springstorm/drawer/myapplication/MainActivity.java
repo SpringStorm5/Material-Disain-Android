@@ -22,12 +22,10 @@ import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-//import com.mikepenz.materialdrawer.model.interfaces
+
 
 
 public class MainActivity extends ActionBarActivity {
-    private static final int PROFILE_SETTING = 1;
-
     private Drawer.Result drawerResult = null;
 
 
@@ -60,52 +58,57 @@ public class MainActivity extends ActionBarActivity {
 //                        new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
                 )
-                                .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                                    @Override
-                                    public void onDrawerOpened(View drawerView) {
-                                        // Скрываем клавиатуру при открытии Navigation Drawer
-                                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                                        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
-                                    }
+                .withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        // Скрываем клавиатуру при открытии Navigation Drawer
+                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
 
-                                    @Override
-                                    public void onDrawerClosed(View drawerView) {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float pos) {
+
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                    }
+                })
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    // Обработка клика
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        if (drawerItem instanceof Nameable) {
+                            Toast.makeText(MainActivity.this, MainActivity.this.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
+                        }
+                        if (drawerItem instanceof Badgeable) {
+                            Badgeable badgeable = (Badgeable) drawerItem;
+                            if (badgeable.getBadge() != null) {
+                                // учтите, не делайте так, если ваш бейдж содержит символ "+"
+                                try {
+                                    int badge = Integer.valueOf(badgeable.getBadge());
+                                    if (badge > 0) {
+                                        drawerResult.updateBadge(String.valueOf(badge - 1), position);
                                     }
-                                })
-                                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    // Обработка клика
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                                        if (drawerItem instanceof Nameable) {
-                                            Toast.makeText(MainActivity.this, MainActivity.this.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (drawerItem instanceof Badgeable) {
-                                            Badgeable badgeable = (Badgeable) drawerItem;
-                                            if (badgeable.getBadge() != null) {
-                                                // учтите, не делайте так, если ваш бейдж содержит символ "+"
-                                                try {
-                                                    int badge = Integer.valueOf(badgeable.getBadge());
-                                                    if (badge > 0) {
-                                                        drawerResult.updateBadge(String.valueOf(badge - 1), position);
-                                                    }
-                                                } catch (Exception e) {
-                                                    Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
-                                                }
-                                            }
-                                        }
-                                    }
-                                })
-                                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                                    @Override
-                                    // Обработка длинного клика, например, только для SecondaryDrawerItem
-                                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                                        if (drawerItem instanceof SecondaryDrawerItem) {
-                                            Toast.makeText(MainActivity.this, MainActivity.this.getString(((SecondaryDrawerItem) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
-                                        }
-                                        return false;
-                                    }
-                                })
-                                .build();
+                                } catch (Exception e) {
+                                    Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
+                                }
+                            }
+                        }
+                    }
+                })
+                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                    @Override
+                    // Обработка длинного клика, например, только для SecondaryDrawerItem
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        if (drawerItem instanceof SecondaryDrawerItem) {
+                            Toast.makeText(MainActivity.this, MainActivity.this.getString(((SecondaryDrawerItem) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
+                        }
+                        return false;
+                    }
+                })
+                .build();
     }
 
     @Override
@@ -125,7 +128,7 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
-     // Заглушка, работа с меню
+    // Заглушка, работа с меню
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -155,5 +158,3 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-
