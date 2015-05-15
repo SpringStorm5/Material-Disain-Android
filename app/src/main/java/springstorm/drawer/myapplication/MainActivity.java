@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Create a few sample profile
 //        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2));
-        profile2 = new ProfileDrawerItem().withName("Spring Storm").withEmail("Springstorm666@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2)).withIdentifier(2);
+        profile2 = new ProfileDrawerItem().withName("Spring Storm").withEmail("Springstorm6661@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2)).withIdentifier(2);
 
         // Create the AccountHeader
         headerResult = new AccountHeader()
