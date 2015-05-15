@@ -12,22 +12,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 
-
 public class MainActivity extends ActionBarActivity {
-    private Drawer.Result drawerResult = null;
 
+    private Drawer.Result drawerResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +38,6 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
         // Инициализируем Navigation Drawer
         drawerResult = new Drawer()
                 .withActivity(this)
@@ -52,10 +48,10 @@ public class MainActivity extends ActionBarActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
-//                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
+                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
-//                        new DividerDrawerItem(),
+                        new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
                 )
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
@@ -64,11 +60,6 @@ public class MainActivity extends ActionBarActivity {
                         // Скрываем клавиатуру при открытии Navigation Drawer
                         InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
-                    }
-
-                    @Override
-                    public void onDrawerSlide(View drawerView, float pos) {
-
                     }
 
                     @Override
@@ -137,23 +128,6 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-        if (id == R.id.menu_1) {
-            return true;
-        }
-
-        if (id == R.id.menu_2) {
-            return true;
-        }
-
-        if (id == R.id.menu_3) {
-            return true;
-        }
-
-        if (id == R.id.menu_4) {
-            return true;
-        }
-
 
         return super.onOptionsItemSelected(item);
     }
