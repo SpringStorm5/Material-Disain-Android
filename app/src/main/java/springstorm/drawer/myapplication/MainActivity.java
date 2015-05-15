@@ -13,19 +13,26 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    private static final int PROFILE_SETTING = 1;
     private Drawer.Result drawerResult = null;
-
+    private AccountHeader.Result headerResult = null;
+    private IProfile profile2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +44,70 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        // Create the AccountHeader
+//        headerResult = new AccountHeader()
+//                .withActivity(this)
+//                .withHeaderBackground(R.drawable.header)
+//                .addProfiles(
+//                 profile2 =   new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2))
+//                )
+//                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+//                    @Override
+//                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+//                        return false;
+//                    }
+//                    })
+//            .build();
+
+        // Create a few sample profile
+//        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2));
+        profile2 = new ProfileDrawerItem().withName("Spring Storm").withEmail("Springstorm666@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2)).withIdentifier(2);
+
+        // Create the AccountHeader
+        headerResult = new AccountHeader()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(
+//                        profile,
+                        profile2,
+//                        profile3,
+//                        profile4,
+//                        profile5,
+                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
+                        new ProfileSettingDrawerItem().withName("Add Account").withDescription("Add new GitHub Account").withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).actionBarSize().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withIdentifier(PROFILE_SETTING),
+                        new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
+                        //sample usage of the onProfileChanged listener
+                        //if the clicked item has the identifier 1 add a new profile ;)
+                        if (profile instanceof IDrawerItem && ((IDrawerItem) profile).getIdentifier() == PROFILE_SETTING) {
+                            IProfile newProfile = new ProfileDrawerItem().withNameShown(true).withName("Batman").withEmail("batman@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2));
+                            if (headerResult.getProfiles() != null) {
+                                //we know that there are 2 setting elements. set the new profile above them ;)
+                                headerResult.addProfile(newProfile, headerResult.getProfiles().size() - 2);
+                            } else {
+                                headerResult.addProfiles(newProfile);
+                            }
+                        }
+
+                        //false if you have not consumed the event and it should close the drawer
+                        return false;
+                    }
+                })
+                .withSavedInstance(savedInstanceState)
+                .build();
+
+
         // Инициализируем Navigation Drawer
         drawerResult = new Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
-                .withHeader(R.layout.drawer_header)
+//                .withHeader(R.layout.headerResult)
+                .withAccountHeader(headerResult)
+
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_map).withIcon(FontAwesome.Icon.faw_gamepad),
@@ -56,11 +121,14 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-                .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        // Скрываем клавиатуру при открытии Navigation Drawer
-                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+            .
+
+            withOnDrawerListener(new Drawer.OnDrawerListener() {
+                @Override
+                public void onDrawerOpened (View drawerView){
+                    // Скрываем клавиатуру при открытии Navigation Drawer
+                    InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
                     }
 
@@ -106,7 +174,10 @@ public class MainActivity extends ActionBarActivity {
                         }
                         return false;
                     }
+
                 })
+
+
                 .build();
 
         new Drawer()
