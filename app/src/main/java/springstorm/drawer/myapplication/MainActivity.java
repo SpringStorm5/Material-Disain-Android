@@ -27,6 +27,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
+
 
 public class MainActivity extends ActionBarActivity {
     private static final int PROFILE_SETTING = 1;
@@ -228,4 +233,27 @@ public class MainActivity extends ActionBarActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
+
+    public class OsmDroidTest extends Activity {
+        /** Called when the activity is first created. */
+        private MapController mapController;
+        private MapView mapView;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.maptest_main);
+            mapView = (MapView) findViewById(R.id.mapview);
+            mapView.setTileSource(TileSourceFactory.MAPNIK);
+            mapView.setBuiltInZoomControls(true);
+            //mapController = mapView.getController();
+            mapController.setZoom(15);
+            GeoPoint point2 = new GeoPoint(51496994, -134733);
+            mapController.setCenter(point2);
+        }
+        protected boolean isRouteDisplayed() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+    }
 }

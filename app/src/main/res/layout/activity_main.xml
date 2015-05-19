@@ -17,6 +17,21 @@
         <!--android:paddingTop="@dimen/tool_bar_top_padding"-->
         <!--android:transitionName="actionBar" -->
 
+    //попытка вставить карту
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <org.osmdroid.views.MapView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mapview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+
+            />
+    </LinearLayout>
 
     <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
     <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
