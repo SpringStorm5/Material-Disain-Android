@@ -234,26 +234,6 @@ public class MainActivity extends ActionBarActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
 
-    public class OsmDroidTest extends Activity {
-        /** Called when the activity is first created. */
-        private MapController mapController;
-        private MapView mapView;
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.maptest_main);
-            mapView = (MapView) findViewById(R.id.mapview);
-            mapView.setTileSource(TileSourceFactory.MAPNIK);
-            mapView.setBuiltInZoomControls(true);
-            //mapController = mapView.getController();
-            mapController.setZoom(15);
-            GeoPoint point2 = new GeoPoint(51496994, -134733);
-            mapController.setCenter(point2);
-        }
-        protected boolean isRouteDisplayed() {
-            // TODO Auto-generated method stub
-            return false;
-        }
     }
-}
+
